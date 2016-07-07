@@ -18,6 +18,8 @@ import vn.fstyle.realmandroiddemo.sqlite.SQLiteHandler;
  */
 public class TaskManager {
 
+    private static final int TOTAL_ITEM = 1000;
+
     public interface Callback {
         void onSQLiteInsertComplete(Long l);
 
@@ -144,9 +146,8 @@ public class TaskManager {
     }
 
     private List<TestRealmObj> initData() {
-        int totalItem = 1000;
         List<TestRealmObj> testRealmObjs = new ArrayList<>();
-        for (int i = 0; i < totalItem; i++) {
+        for (int i = 0; i < TOTAL_ITEM; i++) {
             TestRealmObj obj = new TestRealmObj();
             obj.setId(i);
             obj.setName(String.format("name %d", i));
