@@ -3,6 +3,7 @@ package vn.fstyle.realmandroiddemo;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,8 +19,13 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmObject;
+import vn.fstyle.realmandroiddemo.common.Constant;
+import vn.fstyle.realmandroiddemo.models.TestRealmObj2;
 
 public class MainActivity extends Activity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     public static final int ID_INSERT_SQLITE = 0;
     public static final int ID_INSERT_REALM = 1;
@@ -140,6 +146,47 @@ public class MainActivity extends Activity {
             }
         });
         fillDataIntoChart();
+        findViewById(R.id.btnDemo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TestRealmObj obj = new TestRealmObj();
+//                obj.setId(1);
+//                obj.setName("AAA");
+//                obj.setAge(10);
+//                mRealm.beginTransaction();
+//                mRealm.insertOrUpdate(obj);
+//                mRealm.commitTransaction();
+//
+//                TestRealmObj obj1 = mRealm.where(TestRealmObj.class).equalTo(Constant.ID, 1).findFirst();
+//                Log.d(TAG, "DebugLog value 1: " + obj1.getAge());
+//                TestRealmObj obj2 = mRealm.where(TestRealmObj.class).equalTo(Constant.ID, 1).findFirst();
+//                mRealm.beginTransaction();
+//                obj2.setAge(20);
+//                mRealm.commitTransaction();
+//                Log.d(TAG, "DebugLog value 2: " + obj1.getAge());
+//
+//                mRealm.beginTransaction();
+//                obj2.deleteFromRealm();
+//                mRealm.commitTransaction();
+                mRealm.beginTransaction();
+                TestRealmObj2 obj = mRealm.createObject(TestRealmObj2.class);
+                obj.setId(1);
+                obj.setName("AAA");
+                obj.setAge(10);
+                mRealm.commitTransaction();
+
+                TestRealmObj2 obj1 = mRealm.where(TestRealmObj2.class).equalTo(Constant.ID, 1).findFirst();
+                Log.d(TAG, "DebugLog value 1: " + obj1.getAge());
+                TestRealmObj2 obj2 = mRealm.where(TestRealmObj2.class).equalTo(Constant.ID, 1).findFirst();
+                mRealm.beginTransaction();
+                obj2.setAge(11);
+                mRealm.commitTransaction();
+                Log.d(TAG, "DebugLog value 2: " + obj1.getAge());
+                mRealm.beginTransaction();
+                RealmObject.deleteFromRealm(obj2);
+                mRealm.commitTransaction();
+            }
+        });
     }
 
     private void fillDataIntoChart() {
